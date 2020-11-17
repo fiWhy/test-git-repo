@@ -1,4 +1,4 @@
-const app = document.querySelector('#app');
+const app = document.querySelector('#app ');
 
 const randomNumber = Math.floor(Math.random() * (10 - 5) + 5);
 
