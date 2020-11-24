@@ -1,27 +1,18 @@
-// let answer = prompt('Are you there?');
+// const box = document.querySelector('.box');
+// box.style.marginLeft = '0px';
 
-// if (answer === 'false') {
-//   booleanAnswer = false;
-// } else {
-//   booleanAnswer = true;
-// }
+// const maxMargin = 200;
+// let currentMargin = 200;
 
-// let booleanAnswer = answer === 'false' ? false : true;
+// let rand = Math.floor(Math.random() * 10);
+// let answer;
+// do {
+//   answer = prompt('Gess a number!');
+// } while (answer !== null && Number(answer) !== rand);
 
-// if (answer === 'false') {
-//   booleanAnswer = false;
-// } else {
-//   if (answer === null) {
-//     booleanAnswer = null;
-//   } else {
-//     booleanAnswer = true;
-//   }
-// }
+// console.log('Random number was', rand);
 
-// let booleanAnswer = answer === 'false' ? false : answer === null ? null : true;
-
-// if (answer === 'false' || answer === '-1') {
-//   booleanAnswer = false;
-// }
-
-confirm('Are you sure?') && console.log('True clicked');
+for (let i = 1; i < 10; i++) {
+  if (!(i % 2)) break;
+  console.log(i);
+}
