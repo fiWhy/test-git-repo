@@ -1,34 +1,42 @@
-// let n = +prompt('Enter a number') || 0;
-// let amount = +prompt('Amount of numbers') || 0;
+// () - head -> eyes, nose, ears, mouth
+//  | - neck
+// /|\ - arms, core
+//  /\ - legs
 
-/**
- * Will log numbers that could be devided by first argument
- * @param {number} number Number to devide
- * @param {number} amountOfNumbers Amount of numbers should be shown
- */
-const calc = (number, amountOfNumbers) => {
-  let str = '';
-  for (let i = 0; i < amountOfNumbers; i++) {
-    str += `${!i ? '' : ','}${(i + 1) * number}`;
-  }
-  return str;
+let id = 1;
+
+const createMonster = (name, superPower) => ({
+  id: id++,
+  name,
+  superPower,
+});
+
+const equip = {
+  weapon: null,
+  armor: null,
 };
 
-// const calc = (number, amountOfNumbers) =>
-//   Array(amountOfNumbers)
-//     .fill(1)
-//     .map((_, i) => (i + 1) * number)
-//     .join(',');
+const ktulhu = createMonster('Ktulhu', 'Telekinesis'); // { id: 1, name: 'Ktulhu', superPower: 'Telekinesis}
+const elder = createMonster('Elder', 'Intelligence');
 
-/**
- * Return sum of values
- * @param {number} a First operand
- * @param {number} b Second operand
- */
-const sum = (a = 0, b = 0) => {
-  return a + b;
+const copy = (obj) => {
+  return Object.assign({}, obj);
 };
 
-const resultOfCalc = calc(4, 10);
+const setProperty = (obj, key, value) => ({
+  ...obj,
+  [key]: value,
+});
 
-console.log(resultOfCalc);
+const deleteProperty = (obj, key) => {
+  const newObj = copy(obj);
+  delete newObj[key];
+  return newObj;
+};
+
+const copyOfKtulhu = copy(ktulhu);
+const copyWithAdditionalProperty = deleteProperty(copyOfKtulhu, 'superPower');
+
+// Immutability
+
+console.log(copyOfKtulhu, copyWithAdditionalProperty);
