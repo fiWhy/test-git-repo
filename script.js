@@ -1,58 +1,58 @@
-// () - head -> eyes, nose, ears, mouth
-//  | - neck
-// /|\ - arms, core
-//  /\ - legs
-
-let id = 1;
-
-const createMonster = (name, superPower) => ({
-  id: id++,
-  name,
-  superPower,
-});
-
-const equip = {
-  weapon: null,
-  armor: null,
+const character = {
+  name: 'Witch', // 1
+  key: 'adsad', // 2
+  anotherKey: null,
 };
 
-const ktulhu = createMonster('Ktulhu', 'Telekinesis'); // { id: 1, name: 'Ktulhu', superPower: 'Telekinesis}
-const elder = createMonster('Elder', 'Intelligence');
-
-const copy = (obj) => {
-  return Object.assign({}, obj);
+const getObjectStringsLength = (object) => {
+  let length = 0;
+  for (const key in object) {
+    const value = object[key];
+    if (typeof value !== 'string') continue;
+    length += value.length;
+  }
+  return length;
 };
 
-const setProperty = (obj, key, value) => ({
-  ...obj,
-  [key]: value,
-});
-
-const deleteProperty = (obj, key) => {
-  const newObj = copy(obj);
-  delete newObj[key];
-  return newObj;
+const copyPartial = (object) => {
+  const newObject = {};
+  for (const key in object) {
+    newObject[key] = null;
+  }
+  return newObject;
 };
 
-const copyOfKtulhu = copy(ktulhu);
-const copyWithAdditionalProperty = deleteProperty(copyOfKtulhu, 'superPower');
-
-// Immutability
-
-console.log(copyOfKtulhu, copyWithAdditionalProperty);
-
-const settings = {
-  blood: true,
+const valueLength = (value) => {
+  switch (typeof value) {
+    case 'string':
+      return value.length;
+    case 'boolean':
+      return Number(value);
+    case 'function':
+      return 0;
+    default:
+      return value;
+  }
 };
 
-const hit = (settings) => {
-  console.log('SMASH', settings.blood ? 'BLOOD' : '');
+const copyWithNumericValues = (object) => {
+  const newObject = {};
+  for (const key in object) {
+    newObject[key] = valueLength(object[key]);
+  }
+  return newObject;
 };
 
-hit(settings);
+// [['name', 'Witch'], ['key', 'asdasd'], ['anotherKey', null]]
+const oneLine = (object) =>
+  Object.entries(object).reduce(
+    (acc, [key, value]) => ({
+      ...acc,
+      [key]: valueLength(value),
+    }),
+    {}
+  );
 
-const copyOfSettings = settings
+const numericValues = oneLine(character);
 
-settings.blood = false;
-
-hit(copyOfSettings);
+console.log(numericValues);
