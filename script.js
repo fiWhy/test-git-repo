@@ -40,3 +40,19 @@ const copyWithAdditionalProperty = deleteProperty(copyOfKtulhu, 'superPower');
 // Immutability
 
 console.log(copyOfKtulhu, copyWithAdditionalProperty);
+
+const settings = {
+  blood: true,
+};
+
+const hit = (settings) => {
+  console.log('SMASH', settings.blood ? 'BLOOD' : '');
+};
+
+hit(settings);
+
+const copyOfSettings = settings
+
+settings.blood = false;
+
+hit(copyOfSettings);
