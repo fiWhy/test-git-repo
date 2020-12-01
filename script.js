@@ -1,58 +1,40 @@
-const character = {
-  name: 'Witch', // 1
-  key: 'adsad', // 2
-  anotherKey: null,
+const ingridientsList = {
+  empty: '',
+  cheese: 'cheese',
+  lemon: 'lemon',
+  nail: 'nail',
+  feet: 'feet',
 };
 
-const getObjectStringsLength = (object) => {
-  let length = 0;
-  for (const key in object) {
-    const value = object[key];
-    if (typeof value !== 'string') continue;
-    length += value.length;
-  }
-  return length;
+const kettle = {
+  ingridient1: ingridientsList.empty,
+  ingridient2: ingridientsList.empty,
+  ingridient3: ingridientsList.empty,
+  ingridient4: ingridientsList.empty,
+  cookTheSpell() {},
+  canBeCooked(spell) {
+    for (const key in spell) {
+      if (this[key] !== spell[key]) return false;
+    }
+    return true;
+  },
 };
 
-const copyPartial = (object) => {
-  const newObject = {};
-  for (const key in object) {
-    newObject[key] = null;
-  }
-  return newObject;
+const lightningSpell = {
+  ingridient1: ingridientsList.cheese,
+  ingridient2: ingridientsList.empty,
+  ingridient3: ingridientsList.nail,
+  ingridient4: ingridientsList.empty,
 };
 
-const valueLength = (value) => {
-  switch (typeof value) {
-    case 'string':
-      return value.length;
-    case 'boolean':
-      return Number(value);
-    case 'function':
-      return 0;
-    default:
-      return value;
-  }
+const fireballSpell = {
+  ingridient1: ingridientsList.cheese,
+  ingridient2: ingridientsList.nail,
+  ingridient3: ingridientsList.empty,
+  ingridient4: ingridientsList.feet,
 };
 
-const copyWithNumericValues = (object) => {
-  const newObject = {};
-  for (const key in object) {
-    newObject[key] = valueLength(object[key]);
-  }
-  return newObject;
-};
+kettle.ingridient1 = ingridientsList.cheese;
+kettle.ingridient3 = ingridientsList.nail;
 
-// [['name', 'Witch'], ['key', 'asdasd'], ['anotherKey', null]]
-const oneLine = (object) =>
-  Object.entries(object).reduce(
-    (acc, [key, value]) => ({
-      ...acc,
-      [key]: valueLength(value),
-    }),
-    {}
-  );
-
-const numericValues = oneLine(character);
-
-console.log(numericValues);
+console.log(kettle.canBeCooked(lightningSpell));
