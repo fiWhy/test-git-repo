@@ -1,47 +1,58 @@
-const ingridientsList = {
-  empty: '',
-  cheese: 'cheese',
-  lemon: 'lemon',
-  nail: 'nail',
-  feet: 'feet',
+const magicBook = {
+  recipes: {
+    golem: {
+      bone: 10,
+      stone: 100,
+      nail: 100,
+      poo: 53,
+    },
+    littleDevil: {
+      lava: 10,
+      evil: 999,
+    },
+  },
 };
 
-const kettle = {
-  ingridient1: ingridientsList.empty,
-  ingridient2: ingridientsList.empty,
-  ingridient3: ingridientsList.empty,
-  ingridient4: ingridientsList.empty,
-  cookTheSpell() {
-    // _this = this
-    const fnc = () => {
-      console.log(this); // console.log(_this)
-    };
-
-    fnc();
+const kitchen = {
+  bone: 999,
+  stone: 999,
+  nail: 999,
+  poo: 999,
+  lava: 999,
+  evil: 999,
+  kettle: {
+    material: 'metal',
+    ingridients: {},
   },
-  canBeCooked(spell) {
-    for (const key in spell) {
-      if (this[key] !== spell[key]) return false;
+  addIngridientToKettle(nameOfIngridient, amount) {
+    this[nameOfIngridient] -= amount;
+    this.kettle.ingridients[nameOfIngridient] =
+      (this.kettle.ingridients[nameOfIngridient] || 0) + amount;
+  },
+  cook(recipe) {
+    for (let key in recipe) {
+      const neededAmountOfIngridients = recipe[key];
+      if (
+        !this.kettle.ingridients[key] ||
+        this.kettle.ingridients[key] < neededAmountOfIngridients
+      ) {
+        return false;
+      }
     }
+
     return true;
   },
 };
 
-const lightningSpell = {
-  ingridient1: ingridientsList.cheese,
-  ingridient2: ingridientsList.empty,
-  ingridient3: ingridientsList.nail,
-  ingridient4: ingridientsList.empty,
-};
+kitchen.addIngridientToKettle('bone', 10);
+kitchen.addIngridientToKettle('stone', 100);
+kitchen.addIngridientToKettle('nail', 100);
+kitchen.addIngridientToKettle('poo', 53);
 
-const fireballSpell = {
-  ingridient1: ingridientsList.cheese,
-  ingridient2: ingridientsList.nail,
-  ingridient3: ingridientsList.empty,
-  ingridient4: ingridientsList.feet,
-};
+const couldBeCooked = kitchen.cook(magicBook.recipes.golem);
 
-kettle.ingridient1 = ingridientsList.cheese;
-kettle.ingridient3 = ingridientsList.nail;
-
-kettle.cookTheSpell();
+if (couldBeCooked) {
+  console.log('Could be cooked');
+} else {
+  console.log('Not enugh ingridients');
+}
