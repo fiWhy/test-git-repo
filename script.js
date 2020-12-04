@@ -11,7 +11,14 @@ const kettle = {
   ingridient2: ingridientsList.empty,
   ingridient3: ingridientsList.empty,
   ingridient4: ingridientsList.empty,
-  cookTheSpell() {},
+  cookTheSpell() {
+    // _this = this
+    const fnc = () => {
+      console.log(this); // console.log(_this)
+    };
+
+    fnc();
+  },
   canBeCooked(spell) {
     for (const key in spell) {
       if (this[key] !== spell[key]) return false;
@@ -37,4 +44,4 @@ const fireballSpell = {
 kettle.ingridient1 = ingridientsList.cheese;
 kettle.ingridient3 = ingridientsList.nail;
 
-console.log(kettle.canBeCooked(lightningSpell));
+kettle.cookTheSpell();
