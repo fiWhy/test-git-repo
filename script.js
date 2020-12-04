@@ -1,40 +1,24 @@
-/**
- * call
- * apply
- * bind
- */
-
-const increaseSalary = function (by) {
-  this.salary += by;
+const recipe1 = {
+  a: 2,
+  b: 3,
+  c: 4,
 };
 
-function User(name, language, exp) {
-  this.name = name;
-  this.language = language;
-  this.tasks = 0;
-  this.exp = exp || 0;
-  this.salary = (this.exp + 1) * 100;
+const recipe2 = {
+  c: 4,
+  a: 2,
+  b: 3,
+};
 
-  this.increaseSalary = (by) => {
-    this.salary += by;
-  };
+// [[c, 4]:0  [a, 2]:1  [b, 3]:2 ]
+// [[a, 2]:0  [b, 3]:1  [c, 4]:2 ]
 
-  // this.increaseSalary = function (by) {
-  //   this.salary += by;
-  // }.bind(this);
-}
+const toArray = (obj) => Object.entries(obj);
+const checkQueueAndValue = (obj1, obj2) => {
+  const obj2Array = toArray(obj2);
+  return toArray(obj1).every(
+    ([key, value], i) => obj2Array[i][0] === key && obj2Array[i][1] === value
+  );
+};
 
-const vasya = new User('Vasya', 'JavaScript');
-const petya = new User('Patya', 'JavaScript');
-
-// petya.increaseSalary.call(vasya, 200);
-// increaseSalary.apply(vasya, [200]);
-
-// const fnc = increaseSalary.bind(vasya);
-
-// petya.increaseSalary = vasya.increaseSalary;
-// petya.increaseSalary = fnc.bind(petya);
-
-petya.increaseSalary.call(vasya, 200);
-
-console.log(vasya, petya);
+console.log(checkQueueAndValue(recipe1, recipe2));
