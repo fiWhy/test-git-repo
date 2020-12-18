@@ -1,74 +1,50 @@
-const log = (data) => console.log(data);
-
-function User(name, salary, language) {
-  this.name = name;
-  this.language = language;
-  this.online = true;
-  this.salary = salary;
-}
-
-User.prototype.increaseSalary = function () {
-  this.salary += 100;
-};
-
-User.prototype.toggleOnline = function () {
-  this.online = !this.online;
-};
-
-const users = [
-  {
-    name: 'Vasya',
-    salary: 1000,
+const arr = [1, 2, 3];
+const obj = {
+  tasks: [],
+  [Symbol.iterator]() {
+    const values = [...this.tasks];
+    return {
+      next() {
+        const done = !values.length;
+        const nextValue = values.shift();
+        return {
+          value: !done? nextValue(): undefined,
+          done,
+        };
+      },
+    };
   },
-  {
-    name: 'Petya',
-    salary: 1000,
-  },
-  {
-    name: 'Grigory',
-    salary: 1000,
-  },
-];
-
-const map = (arr, cb) => {
-  const newArr = [];
-  for (let i = 0; i < arr.length; i++) {
-    newArr.push(cb(arr[i]));
-  }
-  return newArr;
 };
 
-const filter = (arr, cb) => {
-  const newArray = [];
-  for (let i = 0; i < arr.length; i++) {
-    const element = arr[i];
-    if (cb(element)) {
-      newArray.push(element);
-    }
-  }
-  return newArray;
-};
+obj.tasks.push(() => 'abc');
+obj.tasks.push(() => 'asdssg');
+obj.tasks.push(() => 'asfgfgbc');
+obj.tasks.push(() => 'agsdfgfbc');
+obj.tasks.push(() => 'abdfdsfsc');
 
-const arrOfUsers = map(users, (data) => new User(data.name, data.salary));
-const arrOfNumbers = map([1, 2, 3, 4, 'abc', 1, 3], Number);
-// const anotherArrayOfUsers = users.map(
-//   (data) => new User(data.name, data.salary)
-// );
-const anotherFilteredElements = arrOfNumbers.filter(
-  (element) => !Number.isNaN(element)
-);
-// console.log(filter(arrOfNumbers, (element) => !Number.isNaN(element)));
+// for (let v of obj) {
+//   console.log(v);
+// }
 
-console.log(anotherFilteredElements);
+const objectInterator = obj[Symbol.iterator]();
 
-// map([1,2,3, '2'], Number) -> [1,2,3,2]
-// fnc([1,2,3, 'abc']) -> [1,2,3]
+console.log(objectInterator.next());
+console.log(objectInterator.next());
+console.log(objectInterator.next());
+console.log(objectInterator.next());
+console.log(objectInterator.next());
+console.log(objectInterator.next());
+console.log(objectInterator.next());
+console.log(objectInterator.next());
 
-const mappedUsers = users.map(
-  (user) => new User(user.name, user.salary, 'JavaScript')
-);
+// const iterator = arr[Symbol.iterator]();
 
-mappedUsers[0].increaseSalary();
-mappedUsers[2].increaseSalary();
-
-console.log(mappedUsers.filter((user) => user.salary > 1000));
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
+// console.log(iterator.next());
