@@ -1,62 +1,69 @@
-// const Settings = (() => {
-//   let instance;
-//   const localCheck = Symbol();
-//   function Constructor(check) {
-//     if (check !== localCheck) throw new Error('Try another method');
+const sum = (...numbers) =>
+  !numbers.length ? 0 : numbers[0] + sum(...numbers.slice(1));
 
-//     this.width = Math.random() * 100;
-//     this.height = Math.random() * 100;
-//   }
+/**
+ * <- 1 + sum([2,3,4]) // 1 + 9 ->
+ * <- 2 + sum([3,4]) // 2 + 7  ->
+ * <- 3 + sum([4]) // 3 + 4 ->
+ * <- 4 + sum([]) // 4 + 0 ->
+ * <- 0
+ *
+ */
 
-//   Constructor.getInstance = () =>
-//     instance ? instance : (instance = new Constructor(localCheck));
+let lastActiveDate = new Date();
 
-//   return Constructor;
-// })();
+window.addEventListener('mousemove', () => {
+  lastActiveDate = new Date();
+});
 
-// console.log(Settings.getInstance() === Settings.getInstance());
+//
 
-// const name = 'My games rating';
-const s = 2;
-const a = () => {
-  s;
-  // debugger;
-  const b = 5;
-  return () => {
-    b;
-    s;
-    // debugger;
-    return b;
-  };
+const timer = (cb, timeout) => {
+  let timerId = setTimeout(function tick() {
+    cb();
+    timerId = setTimeout(tick, timeout);
+  }, timeout);
+
+  return () => clearTimeout(timerId);
 };
 
-const res = a();
+const stopTimer = timer(() => {
+  const diff = new Date() - lastActiveDate;
 
-console.log(res());
-console.log(res());
-console.log(res());
+  if (diff > 2 * 1000) {
+    console.log('AFK');
+  }
+}, 1000);
 
-const sum = (a, b) => a + b;
+const pow = (n, p) => {
+  for (let i = 1, v = n; i < p; i++) {
+    n *= v;
+  }
+  return n;
+};
 
-console.log(sum(1, 2));
+const recurrPow = (n, p) => {
+  if (!p) return 1;
+  return n * recurrPow(n, p - 1);
+};
 
-const it = {
-  tasks: [1, 2, 3],
-  [Symbol.iterator]() {
-    const copy = this.tasks.slice();
-    return {
-      next: () => {
-        const value = copy.shift();
-        debugger;
-        return {
-          value,
-          done: !value,
-        };
+const obj = {
+  a: 2,
+  b: {
+    c: 4,
+    d: {
+      e: 5,
+      f: {
+        g: 6,
       },
-    };
+    },
   },
 };
 
-const iterator = it[Symbol.iterator]();
+const newObj = {
+  ...obj,
+};
 
-console.log(iterator.next());
+newObj.b.c = 6;
+
+console.log(obj.b.c);
