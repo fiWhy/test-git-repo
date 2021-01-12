@@ -1,38 +1,57 @@
-const obj = {
-  a: {
-    b: {
-      c: {
-        d: 5,
-      },
-    },
-  },
-  b: 8,
-  c: 10,
+function Human() {
+  this.wakeUp();
+}
+
+Human.prototype.wakeUp = () => {
+  console.log('Morning!');
 };
 
-const copy = (obj) => {
-  const newObj = {};
-  for (const key in obj) {
-    if (obj.hasOwnProperty(key)) {
-      newObj[key] =
-        typeof obj[key] === 'object' && typeof obj[key] !== null
-          ? copy(obj[key])
-          : obj[key];
-    }
+function Employee() {
+  Human.call(this);
+}
+
+Employee.prototype = Object.create(Human.prototype);
+Employee.prototype.constructor = Employee;
+
+function Developer(hungry = false) {
+  Employee.call(this);
+  this.hungry = hungry;
+}
+
+Developer.prototype = Object.create(Employee.prototype);
+Developer.prototype.constructor = Developer;
+
+Developer.prototype.code = () => {
+  if (this.hungry) {
+    console.log('Slow coding...');
+  } else {
+    console.log('Lazy coding...');
   }
-  return newObj;
 };
 
-const get = (value, strPath) => {
-  if (!strPath || !strPath.length || value === null || value === undefined)
-    return value;
+function JavaDeveloper(hungry) {
+  Developer.call(this, hungry);
+}
 
-  const path = Array.isArray(strPath) ? [...strPath] : strPath.split('.');
-  const step = path.shift();
+JavaDeveloper.prototype = Object.create(Developer.prototype);
+JavaDeveloper.prototype.constructor = JavaDeveloper;
 
-  return get(value[step], path);
-};
+function PythonDeveloper(hungry) {
+  Developer.call(this, hungry);
+}
 
-console.log(get(obj, ['a', 'b', 'c', 'd'])); // 5;
-console.log(get(obj, 'a.b.c.f')); // undefined;
-console.log(get(obj, 'a.e.c.f')); // undefined;
+PythonDeveloper.prototype = Object.create(Developer.prototype);
+PythonDeveloper.prototype.constructor = PythonDeveloper;
+
+function JavaScriptDeveloper(hungry) {
+  Developer.call(this, hungry);
+  this.language = 'JavaScript';
+}
+
+JavaScriptDeveloper.prototype = Object.create(Developer.prototype);
+Object.defineProperty(JavaScriptDeveloper.prototype, 'constructor', {
+  value: JavaScriptDeveloper,
+  enumerable: false,
+  configurable: false,
+  writable: true,
+});
