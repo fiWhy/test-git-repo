@@ -18,6 +18,20 @@ app.get('/get', (req, res) => {
   });
 });
 
+app.delete('/:id', ({ params }, res) => {
+  const { id } = params;
+  console.log(id);
+  readJSON(usersAddr, (_, data) => {
+    res.send('Deleted');
+  });
+});
+
+app.patch('/:id', ({ body, params }, res) => {
+  const { id } = params;
+  console.log(id, body);
+  res.send('Patched');
+});
+
 app.post('/add', ({ body }, res) => {
   readJSON(usersAddr, (_, data) => {
     const lastUser = data[data.length - 1];
