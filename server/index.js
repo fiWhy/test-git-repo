@@ -1,5 +1,6 @@
 const { readJSON, writeJSON } = require('./utils');
 const { join } = require('path');
+const cors = require('cors');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -11,6 +12,7 @@ const levelsAddr = join(__dirname, './levels.json');
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors());
 
 app.get('/get', (req, res) => {
   readJSON(usersAddr, (_, data) => {
@@ -33,6 +35,7 @@ app.patch('/:id', ({ body, params }, res) => {
 });
 
 app.post('/add', ({ body }, res) => {
+  console.log(body);
   readJSON(usersAddr, (_, data) => {
     const lastUser = data[data.length - 1];
     const newData = [
