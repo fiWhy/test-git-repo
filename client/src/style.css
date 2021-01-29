@@ -1,5 +1,5 @@
 .box {
-    --color: green;
+    --color: teal;
     --size: 200px;
     width: var(--size);
     height: var(--size);
@@ -9,5 +9,5 @@
 }
 
 .box.dark {
-    --color: teal;
+    --color: brown;
 }

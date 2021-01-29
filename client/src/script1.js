@@ -5,3 +5,5 @@ const Script1Module = (() => {
     a,
   };
 })();
+
+module.exports = Script1Module;
