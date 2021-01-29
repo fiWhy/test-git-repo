@@ -35,7 +35,6 @@ app.patch('/:id', ({ body, params }, res) => {
 });
 
 app.post('/add', ({ body }, res) => {
-  console.log(body);
   readJSON(usersAddr, (_, data) => {
     const lastUser = data[data.length - 1];
     const newData = [
