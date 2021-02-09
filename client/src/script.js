@@ -9,16 +9,21 @@ get().then((data) => {
       div({
         classNames: ['gellery__prev__wrapper'],
         listeners: {
-          click: () => (currentSlide = !currentSlide ? 0 : currentSlide - 1),
+          click: () => {
+            currentSlide = !currentSlide ? 0 : currentSlide - 1;
+            console.log(currentSlide);
+          },
         },
         children: ['<'],
       }),
       div({
         classNames: ['gellery__next__wrapper'],
         listeners: {
-          click: () =>
-            (currentSlide =
-              currentSlide === data.length ? data.length : currentSlide + 1),
+          click: () => {
+            currentSlide =
+              currentSlide === data.length ? data.length : currentSlide + 1;
+            console.log(currentSlide);
+          },
         },
         children: ['>'],
       }),
@@ -44,6 +49,8 @@ get().then((data) => {
       }),
     ],
   });
+
+  console.log(wrapper);
 
   app.append(wrapper);
 });

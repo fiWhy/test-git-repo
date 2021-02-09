@@ -1,4 +1,5 @@
 import { fetchOptions, apiUrl } from './constants';
+import { chain, curryRight } from 'lodash';
 
 const prepareUrl = (postFix) => `${apiUrl}${postFix}`;
 const responseToJson = (response) => response.json();
@@ -24,15 +25,22 @@ export const appendChildren = (el, children = []) => {
   return newElement;
 };
 
+export const addListeners = (el, listeners = {}) => {
+  const newElement = el.cloneNode();
+  Object.entries(listeners).forEach(([listener, callback]) => {
+    newElement.addEventListener(listener, callback);
+  });
+  return newElement;
+};
+
 export const element = (
   tagName,
-  { children = [], classNames = [], ...additionalProps }
+  { children = [], classNames = [], listeners = {}, ...additionalProps }
 ) =>
-  appendChildren(
-    addClasses(document.createElement(tagName), classNames),
-    children
-  );
+  chain(document.createElement(tagName))
+    .thru((el) => addClasses(el, classNames))
+    .thru((el) => addListeners(el, listeners))
+    .thru((el) => appendChildren(el, children))
+    .value();
 
 export const div = (props) => element('div', props);
-
-//http://localhost:8080
