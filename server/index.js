@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(bodyParser.json());
 app.use(cors());
 
-app.get('/get', (req, res) => {
+app.get('/', (req, res) => {
   readJSON(usersAddr, (_, data) => {
     res.send(data);
   });
@@ -34,7 +34,7 @@ app.patch('/:id', ({ body, params }, res) => {
   res.send('Patched');
 });
 
-app.post('/add', ({ body }, res) => {
+app.post('/', ({ body }, res) => {
   readJSON(usersAddr, (_, data) => {
     const lastUser = data[data.length - 1];
     const newData = [
