@@ -4,13 +4,8 @@ get().then((data) => {
   const app = document.getElementById('app');
   let currentSlide = 0;
 
-  {
-    /* <div style="text-align:center">
-  <span class="dot" onclick="currentSlide(1)"></span>
-  <span class="dot" onclick="currentSlide(2)"></span>
-  <span class="dot" onclick="currentSlide(3)"></span>
-</div>; */
-  }
+  let cards, points;
+
   const wrapper = div({
     classNames: ['slideshow-container'],
     children: [
@@ -35,8 +30,8 @@ get().then((data) => {
         },
         children: ['❯'],
       }),
-      ...data.map((user, i) => {
-        const card = div({
+      ...(cards = data.map((user, i) =>
+        div({
           classNames: ['mySlides', 'fade', !i ? 'active' : 'hide'],
           children: [
             div({
@@ -52,20 +47,18 @@ get().then((data) => {
               children: [user.name],
             }),
           ],
-        });
-
-        return card;
-      }),
+        })
+      )),
     ],
   });
 
   const dotsWrapper = div({
     classNames: ['dots-wrapper'],
-    children: data.map((_, i) =>
+    children: (points = data.map((_, i) =>
       span({
         classNames: ['dot'],
       })
-    ),
+    )),
   });
 
   app.append(wrapper);
