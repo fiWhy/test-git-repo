@@ -1,5 +1,5 @@
 import { fetchOptions, apiUrl } from './constants';
-import { chain, curryRight } from 'lodash';
+import { chain } from 'lodash';
 
 const prepareUrl = (postFix) => `${apiUrl}${postFix}`;
 const responseToJson = (response) => response.json();
@@ -40,3 +40,5 @@ export const element = (
     .value();
 
 export const div = (props) => element('div', props);
+export const a = (props) => element('a', props);
+export const img = (props) => element('img', props);

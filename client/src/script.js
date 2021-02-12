@@ -1,23 +1,29 @@
-import { div, get } from './utils';
+import { div, get, a, img } from './utils';
 
 get().then((data) => {
   const app = document.getElementById('app');
   let currentSlide = 0;
+
+{/* <div style="text-align:center">
+  <span class="dot" onclick="currentSlide(1)"></span>
+  <span class="dot" onclick="currentSlide(2)"></span>
+  <span class="dot" onclick="currentSlide(3)"></span>
+</div>; */}
   const wrapper = div({
-    classNames: ['gallery'],
+    classNames: ['slideshow-container'],
     children: [
-      div({
-        classNames: ['gellery__prev__wrapper'],
+      a({
+        classNames: ['prev'],
         listeners: {
           click: () => {
             currentSlide = !currentSlide ? 0 : currentSlide - 1;
             console.log(currentSlide);
           },
         },
-        children: ['<'],
+        children: ['❯'],
       }),
-      div({
-        classNames: ['gellery__next__wrapper'],
+      a({
+        classNames: ['next'],
         listeners: {
           click: () => {
             currentSlide =
@@ -25,27 +31,28 @@ get().then((data) => {
             console.log(currentSlide);
           },
         },
-        children: ['>'],
+        children: ['❮'],
       }),
-      div({
-        classNames: ['gallery__cards__wrapper'],
-        children: data.map((user) => {
-          const card = div({
-            classNames: ['card'],
-            children: [
-              div({
-                classNames: ['card__header'],
-                children: [user.name],
-              }),
-              div({
-                classNames: ['card__body'],
-                children: [user.level],
-              }),
-            ],
-          });
+      ...data.map((user, i) => {
+        const card = div({
+          classNames: ['mySlides', 'fade'],
+          children: [
+            div({
+              classNames: ['numbertext'],
+              children: [`${i + 1}/${data.length}`],
+            }),
+            img({
+              classNames: ['slider-image'],
+              src: '',
+            }),
+            div({
+              classNames: ['text'],
+              children: [user.name],
+            }),
+          ],
+        });
 
-          return card;
-        }),
+        return card;
       }),
     ],
   });
