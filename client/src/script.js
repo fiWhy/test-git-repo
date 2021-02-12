@@ -4,7 +4,16 @@ get().then((data) => {
   const app = document.getElementById('app');
   let currentSlide = 0;
 
-  let cards, points;
+  let cards, dots;
+
+  const setActualSlide = (index) => {
+    cards.forEach((card) => card.classList.remove('active'));
+    dots.forEach((dot) => dot.classList.remove('active'));
+
+    cards[index].classList.add('active');
+    dots[index].classList.add('active');
+    currentSlide = index;
+  };
 
   const wrapper = div({
     classNames: ['slideshow-container'],
@@ -12,21 +21,19 @@ get().then((data) => {
       a({
         classNames: ['prev'],
         listeners: {
-          click: () => {
-            currentSlide = !currentSlide ? 0 : currentSlide - 1;
-            console.log(currentSlide);
-          },
+          click: () => setActualSlide(!currentSlide ? 0 : currentSlide - 1),
         },
         children: ['❮'],
       }),
       a({
         classNames: ['next'],
         listeners: {
-          click: () => {
-            currentSlide =
-              currentSlide === data.length ? data.length : currentSlide + 1;
-            console.log(currentSlide);
-          },
+          click: () =>
+            setActualSlide(
+              currentSlide === data.length - 1
+                ? data.length - 1
+                : currentSlide + 1
+            ),
         },
         children: ['❯'],
       }),
@@ -54,9 +61,12 @@ get().then((data) => {
 
   const dotsWrapper = div({
     classNames: ['dots-wrapper'],
-    children: (points = data.map((_, i) =>
+    children: (dots = data.map((_, i) =>
       span({
-        classNames: ['dot'],
+        classNames: ['dot', !i ? 'active' : 'not-active'],
+        listeners: {
+          click: () => setActualSlide(i),
+        },
       })
     )),
   });
