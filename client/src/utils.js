@@ -42,3 +42,4 @@ export const element = (
 export const div = (props) => element('div', props);
 export const a = (props) => element('a', props);
 export const img = (props) => element('img', props);
+export const span = (props) => element('span', props);

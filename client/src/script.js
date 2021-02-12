@@ -1,14 +1,16 @@
-import { div, get, a, img } from './utils';
+import { div, get, a, img, span } from './utils';
 
 get().then((data) => {
   const app = document.getElementById('app');
   let currentSlide = 0;
 
-{/* <div style="text-align:center">
+  {
+    /* <div style="text-align:center">
   <span class="dot" onclick="currentSlide(1)"></span>
   <span class="dot" onclick="currentSlide(2)"></span>
   <span class="dot" onclick="currentSlide(3)"></span>
-</div>; */}
+</div>; */
+  }
   const wrapper = div({
     classNames: ['slideshow-container'],
     children: [
@@ -20,7 +22,7 @@ get().then((data) => {
             console.log(currentSlide);
           },
         },
-        children: ['❯'],
+        children: ['❮'],
       }),
       a({
         classNames: ['next'],
@@ -31,11 +33,11 @@ get().then((data) => {
             console.log(currentSlide);
           },
         },
-        children: ['❮'],
+        children: ['❯'],
       }),
       ...data.map((user, i) => {
         const card = div({
-          classNames: ['mySlides', 'fade'],
+          classNames: ['mySlides', 'fade', !i ? 'active' : 'hide'],
           children: [
             div({
               classNames: ['numbertext'],
@@ -57,7 +59,15 @@ get().then((data) => {
     ],
   });
 
-  console.log(wrapper);
+  const dotsWrapper = div({
+    classNames: ['dots-wrapper'],
+    children: data.map((_, i) =>
+      span({
+        classNames: ['dot'],
+      })
+    ),
+  });
 
   app.append(wrapper);
+  app.append(dotsWrapper);
 });
